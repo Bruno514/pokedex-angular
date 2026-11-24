@@ -2,10 +2,10 @@ import { Component, inject, effect } from '@angular/core';
 import { PokemonService, PokemonGender, PokemonDetails } from './pokemon-service/pokemon-service';
 import { Observable } from 'rxjs';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
-  imports: [AsyncPipe, NgOptimizedImage],
+  imports: [AsyncPipe, NgOptimizedImage, RouterLink],
   selector: 'app-pokemon',
   styleUrl: './pokemon.scss',
   templateUrl: './pokemon.html',
@@ -15,7 +15,8 @@ export class Pokemon {
 
   pokemon$!: Observable<PokemonDetails>;
   gender$!: Observable<PokemonGender>
-  evolutionChain$!: Observable<any>
+
+  evolutionChain$!: Observable<PokemonDetails[]>
 
   private pokemonService = inject(PokemonService);
   private route = inject(ActivatedRoute)
@@ -25,9 +26,8 @@ export class Pokemon {
 
     effect(() => {
       this.pokemon$ = this.pokemonService.getPokemon(this.pokemonId);
-      this.gender$ = this.pokemonService.getGender('1');
-      this.evolutionChain$ = this.pokemonService.getEvolutionChain('1')
-      this.evolutionChain$.subscribe(c => console.log(c))
+      this.evolutionChain$ = this.pokemonService.getEvolutionChain(this.pokemonId)
+      this.evolutionChain$.subscribe(c => c.forEach(g => console.log(g)))
     });
   }
 }

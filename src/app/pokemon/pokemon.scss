@@ -1,0 +1,14 @@
+main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.evolutions {
+  margin-block: 2rem;
+}
+
+.evolution-chain {
+  display: flex;
+}

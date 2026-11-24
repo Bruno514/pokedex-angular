@@ -6,6 +6,12 @@ export const routes: Routes = [
   {
     path: '',
     title: 'Home Page',
+    redirectTo: '1',
+    pathMatch: 'full',
+  },
+  {
+    path: ':page',
+    title: 'Home Page',
     component: Home
   },
   {

@@ -4,9 +4,9 @@ import { environment } from '../../../environments/environment';
 import { Observable, switchMap, map, forkJoin } from 'rxjs';
 
 export type PokemonDetails = {
-  id: number,
+  id: string,
   name: String,
-  height: Number,
+  height: number,
   weight: Number,
   types: Object[],
   sprites: {
@@ -44,6 +44,18 @@ export type PokemonEvolutionChain = {
 export class PokemonService {
   private http = inject(HttpClient);
 
+  getPokemonsByUrls(list: any[]): Observable<PokemonDetails[]> {
+    const pokemonRequests = list.map(item =>
+      this.http.get<PokemonDetails>(item.url)
+    );
+
+    return forkJoin(pokemonRequests).pipe(
+      map(pokemons => ([
+        ...pokemons
+      ]))
+    );
+  }
+
   getPokemonsByPage(page: number, limit = 20): Observable<PokemonDetails[]> {
     const offset = (page - 1) * limit;
 
@@ -76,7 +88,7 @@ export class PokemonService {
     return this.http.get<{ name: string }>(`${environment.apiUrl}/gender/${id}`);
   }
 
-  getEvolutionChain(id: string): Observable<any[]> {
+  getEvolutionChain(id: string): Observable<PokemonDetails[]> {
     return this.getPokemon(id).pipe(
       switchMap(pokemon =>
         this.http.get<{
@@ -103,6 +115,18 @@ export class PokemonService {
 
         return evolutionChain;
       })
+    ).pipe(switchMap(response => {
+      console.log(response)
+      const pokemonRequests = response.map(item =>
+        this.getPokemon(item.species_name)
+      );
+
+      return forkJoin(pokemonRequests).pipe(
+        map(pokemons => ([
+          ...pokemons
+        ]))
+      );
+    })
     );
   }
 }

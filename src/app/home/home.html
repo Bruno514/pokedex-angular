@@ -1,5 +1,21 @@
+<main>
+  <h1>Pokedex</h1>
 
-<p>home works!</p>
-@for (pokemon of (pokemonsPaginated$ | async); track pokemon.id) {
-<p>{{ pokemon.name }}</p>
-}
+  <section [class]="'pokemons'">
+    @for (pokemon of (pokemonsPaginated$ | async); track pokemon.id) {
+    <a [routerLink]="'/pokemon/' + pokemon.id">
+      <article [class]="['pokemon']">
+        <img [class]="'pokemon-sprite'" [ngSrc]="pokemon.sprites.other.home.front_default" width="200" height="200" priority/>
+        <h1 [class]="'pokemon-id'">#{{ pokemon.id.toString().padStart(4, '0') }}</h1>
+        <p [class]="'pokemon-name'">{{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}</p>
+      </article>
+    </a>
+    }
+
+  </section>
+  <section [class]="['change-page']">
+    <button (click)="changePage('prev')">Prev</button>
+    <button (click)="changePage('next')">Next</button>
+  </section>
+
+</main>
