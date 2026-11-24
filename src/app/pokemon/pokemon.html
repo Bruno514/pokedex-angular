@@ -1,0 +1,11 @@
+@if (pokemon$ | async ; as pokemon) {
+  <img [ngSrc]="pokemon.sprites.other.home.front_default" alt=[pokemon] width="400" height="400" priority />
+  <p>Name: {{ pokemon.name }}</p>
+  <section [class]="'stats'">
+    <p>Height: {{ pokemon.height }} cm
+    <p>Weight: {{ pokemon.weight // 10}} kg
+  </section>
+  @if (gender$ | async ; as gender) {
+    <p>Gender: {{ gender.name }} </p>
+  }
+}

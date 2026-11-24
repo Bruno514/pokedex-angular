@@ -1,0 +1,5 @@
+
+<p>home works!</p>
+@for (pokemon of (pokemonsPaginated$ | async); track pokemon.id) {
+<p>{{ pokemon.name }}</p>
+}
