@@ -1,6 +1,5 @@
+<app-navbar/>
 <main>
-  <h1>Pokedex</h1>
-
   <section [class]="'pokemons'">
     @for (pokemon of (pokemonsPaginated$ | async); track pokemon.id) {
     <a [routerLink]="'/pokemon/' + pokemon.id">

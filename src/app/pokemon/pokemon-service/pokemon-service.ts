@@ -8,7 +8,18 @@ export type PokemonDetails = {
   name: String,
   height: number,
   weight: Number,
-  types: Object[],
+  stats: {
+    base_stat: number,
+    stat: {
+      name: string,
+    }
+  }[],
+  types: {
+    slot: number,
+    type: {
+      name: string
+    },
+  }[]
   sprites: {
     other: {
       home: {

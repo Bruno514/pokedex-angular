@@ -1,12 +1,21 @@
+<app-navbar/>
 <main>
   <section [class]="'pokemon'">
   @if (pokemon$ | async ; as pokemon) {
     <img [ngSrc]="pokemon.sprites.other.home.front_default" alt=[pokemon] width="400" height="400" priority />
     <h1 [class]="'pokemon-name'">{{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}}</h1>
+    <section [class]="'types'">
+    @for (type of (pokemon.types);  track type.slot) {
+      <p>{{ type.type.name }}</p>
+    }
+    </section>
     <section [class]="'stats'">
       <h1>Stats</h1>
-      <p [class]="'pokemon-height'">{{ pokemon.height * 10 }} cm
-      <p [class]="'pokemon-weigth'">{{ pokemon.weight // 10}} kg
+      <p [class]="'pokemon-height'">height: {{ pokemon.height * 10 }} cm
+      <p [class]="'pokemon-weigth'">weight: {{ pokemon.weight // 10}} kg
+      @for (stat of (pokemon.stats);  track stat.stat.name) {
+        <p>{{ stat.stat.name }}: {{ stat.base_stat }}</p>
+      }
     </section>
     @if (gender$ | async ; as gender) {
       <p>Gender: {{ gender.name }} </p>
@@ -17,6 +26,7 @@
   <section [class]="'evolutions'">
     <h1>Evolutions</h1>
     <small>Nao suporte evoluções ramificadas!!</small>
+
     <section [class]="'evolution-chain'">
     @for (pokemon of (evolutionChain$ | async); track pokemon.id) {
       <a [routerLink]="'/pokemon/' + pokemon.id">

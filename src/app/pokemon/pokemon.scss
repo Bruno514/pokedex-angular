@@ -5,6 +5,24 @@ main {
   width: 100%;
 }
 
+.pokemon-name {
+  font-size: 3rem;
+  text-decoration: underline;
+}
+
+.types {
+  display: flex ;
+  gap: 1rem;
+}
+
+.stats {
+  border: solid 1px gray;
+  border-radius: 1rem;
+  border-style: dotted;
+  margin-block: 2rem;
+  padding: 1rem;
+}
+
 .evolutions {
   margin-block: 2rem;
 }

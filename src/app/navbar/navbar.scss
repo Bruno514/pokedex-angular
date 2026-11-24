@@ -1,0 +1,15 @@
+header {
+  margin: 2rem;
+}
+
+h1 {
+  transition: font-size 2s ease, text-decoration 2s ease;
+  text-decoration: none;
+  font-size:2rem;
+  cursor: pointer;
+
+  &:hover {
+    font-size: 2.25rem;
+    text-decoration: underline;
+  }
+}

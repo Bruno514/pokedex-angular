@@ -3,16 +3,15 @@ import { PokemonService, PokemonGender, PokemonDetails } from './pokemon-service
 import { Observable } from 'rxjs';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
-  imports: [AsyncPipe, NgOptimizedImage, RouterLink],
+  imports: [AsyncPipe, NgOptimizedImage, RouterLink, Navbar],
   selector: 'app-pokemon',
   styleUrl: './pokemon.scss',
   templateUrl: './pokemon.html',
 })
 export class Pokemon {
-  readonly pokemonId: string;
-
   pokemon$!: Observable<PokemonDetails>;
   gender$!: Observable<PokemonGender>
 
@@ -22,12 +21,11 @@ export class Pokemon {
   private route = inject(ActivatedRoute)
 
   constructor() {
-    this.pokemonId = this.route.snapshot.paramMap.get('id') || '';
+    this.route.params.subscribe(params => {
+      const pokemonId = params['id'];
 
-    effect(() => {
-      this.pokemon$ = this.pokemonService.getPokemon(this.pokemonId);
-      this.evolutionChain$ = this.pokemonService.getEvolutionChain(this.pokemonId)
-      this.evolutionChain$.subscribe(c => c.forEach(g => console.log(g)))
+      this.pokemon$ = this.pokemonService.getPokemon(pokemonId);
+      this.evolutionChain$ = this.pokemonService.getEvolutionChain(pokemonId)
     });
   }
 }

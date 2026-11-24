@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { PokemonService, PokemonDetails } from '../pokemon/pokemon-service/pokemon-service';
 import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
-  imports: [AsyncPipe, NgOptimizedImage, RouterLink],
+  imports: [AsyncPipe, NgOptimizedImage, RouterLink, Navbar],
   selector: 'app-home',
   styleUrl: './home.scss',
   templateUrl: './home.html',
